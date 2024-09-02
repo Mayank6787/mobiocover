@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { Image, Loader, Loader2, MousePointerSquareDashed } from "lucide-react";
+import { useState, useTransition } from "react";
 import Dropzone, { FileRejection } from "react-dropzone";
 const Page = () => {
   //React state for drag, and by default it is false
@@ -14,10 +15,16 @@ const Page = () => {
     console.log("accepted");
   };
 
+  const isUploading = false;
+
+  // startTransition use this function when we navigate user to the next page
+  const [isPending, startTransition] = useTransition();
+
   return (
     //Top level div return
     //classname is declared dynamically
     //height full , flex , margin - y 16 , bg-gray
+
     <div
       className={cn(
         "relative h-full flex-1 my-16 w-full rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl flex justify-center flex-col items-center",
@@ -51,7 +58,18 @@ const Page = () => {
               {...getRootProps()}
             >
               <input {...getInputProps()} />
-              asd
+
+              {/* conditional check */}
+              {isDragOver ? (
+                <MousePointerSquareDashed className="h-6 w-6 text-zinc-500 mb-2"></MousePointerSquareDashed>
+              ) : isUploading || isPending ? (
+                //For user uploading till uploaded process
+                <Loader2 className="animate-spin h-6 w-6 text-zinc-500 mb-2"></Loader2>
+              ) : (
+                // Image icon from lucide react
+                <Image className=" h-6 w-6 text-zinc-500 mb-2" />
+              )}
+              
             </div>
           )}
         </Dropzone>
