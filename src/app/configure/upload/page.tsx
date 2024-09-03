@@ -1,7 +1,10 @@
 "use client";
 import { Progress } from "@/components/ui/progress";
+import { Toaster } from "@/components/ui/toaster";
+import { useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { Image, Loader, Loader2, MousePointerSquareDashed } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import Dropzone, { FileRejection } from "react-dropzone";
 const Page = () => {
@@ -9,13 +12,51 @@ const Page = () => {
   // and extra generic is passed as <boolean>
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const router = useRouter();
 
-  const onDropRejected = () => {};
+  const {startUpload} = useUploadThing("imageUploader", {
+    onClientUploadComplete: ([data]) => {
+      const configId = data.serverData.configId;
+      //while applying a transition , user will be push to the next page 
+      //with configId 
+      startTransition(() => {
+        router.push(`/configure/design?id=${configId}`);
+      });
+    },
+    //and then we get uploadoProgress and then we set to the setUploadProgress . 
+    onUploadProgress(p){
+      setUploadProgress(p)
+    }
+  });
+
+
+  //This function get called if file is rejected 
+  const onDropRejected = (rejectedFiles:FileRejection[]) => {
+    const [File] = rejectedFiles
+
+    setIsDragOver(false); 
+
+    //show error notification if the file is not accepted , 
+    
+  };
+
+
+
 
   //This function get called if the input is accepted
-  const onDropAccepted = () => {
-    console.log("accepted");
+  const onDropAccepted = (acceptedFiles:File[]) => {
+
+    startUpload(acceptedFiles, {configId:undefined})
+
+//image was succefully accepted 
+    setIsDragOver(false)
   };
+
+
+
+
+
+
 
   const isUploading = false;
 
@@ -91,13 +132,15 @@ const Page = () => {
                   </p>
                 ) : (
                   <p>
-                    <span className="font-semibold">Click to upload </span>
-                    or drag and drop
+                    <span className="font-semibold">Click to upload</span> or
+                    drag and drop
                   </p>
                 )}
               </div>
 
-              {isPending ? null : <p className="text-xs text"></p>}
+              {isPending ? null : (
+                <p className="text-xs text-zinc-500">PNG , JPG , JPEG</p>
+              )}
             </div>
           )}
         </Dropzone>
@@ -107,3 +150,6 @@ const Page = () => {
 };
 
 export default Page;
+
+/* Now the dropzone is ready with upload , let see how we are going to work with the progress bar and for progress bar to work we need to take and store the what user gives and to store that we use uploadthing.com
+ */
