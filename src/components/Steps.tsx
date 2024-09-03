@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
 //What to display in our mini navbar below the original navbar , 
-
 const STEPS = [
   {
     name: "Step 1: Add image",
@@ -31,7 +30,9 @@ const Steps = () => {
   const pathname = usePathname();
 
   return (
+    // ordered list (ol) bcuz the steps are in ordered form . 
     <ol className="rounded-md bg-white lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200">
+      
       {STEPS.map((step, i) => {
         const isCurrent = pathname.endsWith(step.url);
         const isCompleted = STEPS.slice(i + 1).some((step) =>
