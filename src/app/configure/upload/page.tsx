@@ -16,11 +16,6 @@ const Page = () => {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const router = useRouter();
 
-
-
-
-  
-
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
     onClientUploadComplete: ([data]) => {
       const configId = data.serverData.configId;
@@ -35,11 +30,6 @@ const Page = () => {
       setUploadProgress(p);
     },
   });
-
-
-
-
-
 
   //This function get called if file is rejected
   const onDropRejected = (rejectedFiles: FileRejection[]) => {
@@ -118,7 +108,7 @@ const Page = () => {
               <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
                 {isUploading ? (
                   <div className="flex flex-col items-center">
-                    <p>Uploading...</p>
+                    <p>Uploading...completed</p>
                     <Progress
                       value={uploadProgress}
                       className="mt-2 w-40 bg-gray-300"
