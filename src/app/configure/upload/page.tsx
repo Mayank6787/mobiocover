@@ -97,8 +97,7 @@ const Page = () => {
                 )}
               </div>
 
-
-              {isPending ? null: <p className="text-xs text"></p>}
+              {isPending ? null : <p className="text-xs text"></p>}
             </div>
           )}
         </Dropzone>
