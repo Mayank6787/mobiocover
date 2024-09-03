@@ -1,4 +1,5 @@
 "use client";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Image, Loader, Loader2, MousePointerSquareDashed } from "lucide-react";
 import { useState, useTransition } from "react";
@@ -7,6 +8,7 @@ const Page = () => {
   //React state for drag, and by default it is false
   // and extra generic is passed as <boolean>
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const onDropRejected = () => {};
 
@@ -69,7 +71,34 @@ const Page = () => {
                 // Image icon from lucide react
                 <Image className=" h-6 w-6 text-zinc-500 mb-2" />
               )}
-              
+              <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
+                {isUploading ? (
+                  <div className="flex flex-col items-center">
+                    <p>Uploading...</p>
+                    <Progress
+                      value={uploadProgress}
+                      className="mt-2 w-40 bg-gray-300"
+                    />
+                  </div>
+                ) : isPending ? (
+                  <div className="flex flex-col items-center">
+                    <p>Redirecting please wait...</p>
+                  </div>
+                ) : isDragOver ? (
+                  <p>
+                    <span className="font-semibold">Drop file</span>
+                    to upload
+                  </p>
+                ) : (
+                  <p>
+                    <span className="font-semibold">Click to upload </span>
+                    or drag and drop
+                  </p>
+                )}
+              </div>
+
+
+              {isPending ? null: <p className="text-xs text"></p>}
             </div>
           )}
         </Dropzone>
