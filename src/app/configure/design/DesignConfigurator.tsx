@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn, formatPrice } from "@/lib/utils";
 import NextImage from "next/image";
 import { Rnd } from "react-rnd";
-import { Radio, RadioGroup } from "@headlessui/react";
+import { Description, Radio, RadioGroup } from "@headlessui/react";
 import { useRef, useState } from "react";
 import {
   COLORS,
@@ -19,6 +19,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -272,7 +273,7 @@ const DesignConfigurator = ({
                 <div className="relative flex flex-col gap-3 w-full">
                   <Label>Model</Label>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuSubTrigger asChild>
                       <Button
                         variant="outline"
                         role="combobox"
@@ -281,7 +282,7 @@ const DesignConfigurator = ({
                         {options.model.label}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
-                    </DropdownMenuTrigger>
+                    </DropdownMenuSubTrigger>
                     <DropdownMenuContent>
                       {MODELS.options.map((model) => (
                         <DropdownMenuItem
@@ -329,7 +330,7 @@ const DesignConfigurator = ({
                       </Label>
                       <div className="mt-3 space-y-4">
                         {selectableOptions.map((option) => (
-                          <RadioGroup.Option
+                          <Radio
                             key={option.value}
                             value={option}
                             className={({ active, checked }) =>
@@ -343,12 +344,12 @@ const DesignConfigurator = ({
                           >
                             <span className="flex items-center">
                               <span className="flex flex-col text-sm">
-                                <RadioGroup.Label
+                                <Label
                                   className="font-medium text-gray-900"
                                   as="span"
                                 >
                                   {option.label}
-                                </RadioGroup.Label>
+                                </Label>
 
                                 {option.description ? (
                                   <RadioGroup.Description
@@ -363,15 +364,15 @@ const DesignConfigurator = ({
                               </span>
                             </span>
 
-                            <RadioGroup.Description
+                            <Description
                               as="span"
                               className="mt-2 flex text-sm sm:ml-4 sm:mt-0 sm:flex-col sm:text-right"
                             >
                               <span className="font-medium text-gray-900">
                                 {formatPrice(option.price / 100)}
                               </span>
-                            </RadioGroup.Description>
-                          </RadioGroup.Option>
+                            </Description>
+                          </Radio>
                         ))}
                       </div>
                     </RadioGroup>
