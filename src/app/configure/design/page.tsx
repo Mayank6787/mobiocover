@@ -4,15 +4,6 @@ import { db } from "@/db";
 import { notFound } from "next/navigation";
 import DesignConfigurator from "./DesignConfigurator";
 
-//what we need ,
-/* 
-Image: 
---url
---height
---width
---croppedImageUrl
-*/
-
 interface PageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
