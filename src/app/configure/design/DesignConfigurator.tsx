@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn, formatPrice } from "@/lib/utils";
 import NextImage from "next/image";
 import { Rnd } from "react-rnd";
-import { Description, Radio, RadioGroup } from "@headlessui/react";
+import { RadioGroup } from "@headlessui/react";
 import { useRef, useState } from "react";
 import {
   COLORS,
@@ -19,7 +19,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -247,7 +246,7 @@ const DesignConfigurator = ({
                   <Label>Color: {options.color.label}</Label>
                   <div className="mt-3 flex items-center space-x-3">
                     {COLORS.map((color) => (
-                      <Radio
+                      <RadioGroup.Option
                         key={color.label}
                         value={color}
                         className={({ active, checked }) =>
@@ -265,7 +264,7 @@ const DesignConfigurator = ({
                             "h-8 w-8 rounded-full border border-black border-opacity-10"
                           )}
                         />
-                      </Radio>
+                      </RadioGroup.Option>
                     ))}
                   </div>
                 </RadioGroup>
@@ -273,7 +272,7 @@ const DesignConfigurator = ({
                 <div className="relative flex flex-col gap-3 w-full">
                   <Label>Model</Label>
                   <DropdownMenu>
-                    <DropdownMenuSubTrigger asChild>
+                    <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
                         role="combobox"
@@ -282,7 +281,7 @@ const DesignConfigurator = ({
                         {options.model.label}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
-                    </DropdownMenuSubTrigger>
+                    </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {MODELS.options.map((model) => (
                         <DropdownMenuItem
@@ -330,7 +329,7 @@ const DesignConfigurator = ({
                       </Label>
                       <div className="mt-3 space-y-4">
                         {selectableOptions.map((option) => (
-                          <Radio
+                          <RadioGroup.Option
                             key={option.value}
                             value={option}
                             className={({ active, checked }) =>
@@ -344,12 +343,12 @@ const DesignConfigurator = ({
                           >
                             <span className="flex items-center">
                               <span className="flex flex-col text-sm">
-                                <Label
+                                <RadioGroup.Label
                                   className="font-medium text-gray-900"
                                   as="span"
                                 >
                                   {option.label}
-                                </Label>
+                                </RadioGroup.Label>
 
                                 {option.description ? (
                                   <RadioGroup.Description
@@ -364,15 +363,15 @@ const DesignConfigurator = ({
                               </span>
                             </span>
 
-                            <Description
+                            <RadioGroup.Description
                               as="span"
                               className="mt-2 flex text-sm sm:ml-4 sm:mt-0 sm:flex-col sm:text-right"
                             >
                               <span className="font-medium text-gray-900">
                                 {formatPrice(option.price / 100)}
                               </span>
-                            </Description>
-                          </Radio>
+                            </RadioGroup.Description>
+                          </RadioGroup.Option>
                         ))}
                       </div>
                     </RadioGroup>
