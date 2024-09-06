@@ -1,7 +1,10 @@
 'use server'
+//server side logic functions 
 
+//include neon db which is postgress actually
 import { db } from '@/db'
 import { CaseColor, CaseFinish, CaseMaterial, PhoneModel } from '@prisma/client'
+
 
 export type SaveConfigArgs = {
   color: CaseColor
@@ -11,6 +14,7 @@ export type SaveConfigArgs = {
   configId: string
 }
 
+//this function is repsonsible for saving your phone case prepared by the user , 
 export async function saveConfig({
   color,
   finish,
